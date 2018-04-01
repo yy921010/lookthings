@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>lookthings.root</artifactId>
+        <groupId>com.lookthings</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>lookthings.users</artifactId>
+
+    <!-- 添加start-->
+    <packaging>jar</packaging>
+    <!--添加end -->
+    <!-- 添加对工具模块的依赖-->
+    <dependencies>
+        <dependency>
+            <groupId>com.lookthings</groupId>
+            <artifactId>lookthings.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+    <!-- 添加start-->
+
+</project>

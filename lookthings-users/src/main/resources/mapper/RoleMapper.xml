@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lookthings.users.dao.RoleDao">
+    <sql id="role_list_field">id,gmt_create,gmt_modified,role_name,role_desc</sql>
+    <select id="select" resultType="RoleDo">
+        SELECT
+        <include refid="role_list_field"/>
+        FROM t_role
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id!= null and id !='' ">id=#{id}</if>
+            <if test="roleName!= null and roleName !='' ">role_name=#{roleName}</if>
+        </trim>
+    </select>
+
+    <select id="roleCount" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM t_role
+    </select>
+
+    <insert id="insert">
+        INSERT
+        ignore
+        INTO
+        t_role (gmt_create,gmt_modified,role_name,role_desc)
+        VALUES (CURRENT_TIME,CURRENT_TIME,#{roleName},#{roleDesc})
+    </insert>
+
+    <update id="update">
+        UPDATE t_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="true">gmt_modified=CURRENT_TIME</if>
+            <if test="roleName!=null and roleName!='' and roleName!='null'">,role_name=#{roleName}</if>
+            <if test="roleDesc!=null and roleDesc!='' and roleDesc!='null'">,role_desc=#{roleDesc}</if>
+        </trim>
+        WHERE id=#{id} ;
+    </update>
+
+    <delete id="delete">
+        DELETE FROM t_role WHERE id=#{id}
+    </delete>
+</mapper>

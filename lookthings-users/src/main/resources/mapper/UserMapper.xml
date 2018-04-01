@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lookthings.users.dao.UserDao">
+    <sql id="user_list_field">id,gmt_create,gmt_modified,user_name,user_password,user_show_name,role_id,user_desc</sql>
+    <sql id="permission_list_field">id,gmt_create,gmt_modified,permission_name,permission_desc,role_id</sql>
+    <select id="select" resultType="UserDO">
+        SELECT
+        <include refid="user_list_field"/>
+        FROM t_user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id!= null and id !='' ">id=#{id}</if>
+            <if test="userName!= null and userName !=''and userName!='null' ">user_name=#{userName}</if>
+        </trim>
+    </select>
+
+    <select id="userCount" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM t_user
+    </select>
+
+    <insert id="insert">
+        INSERT
+        ignore
+        INTO
+        t_user (gmt_create,gmt_modified,user_name,user_password,user_show_name,role_id,user_desc)
+        VALUES (CURRENT_TIME,CURRENT_TIME,#{userName},#{userPassword},#{userShowName},#{roleId},#{userDesc})
+    </insert>
+
+    <update id="update">
+        UPDATE t_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="true">gmt_modified = CURRENT_TIME</if>
+            <if test="userName!=null and userName!='' and userName!='null'">,user_name=#{userName}</if>
+            <if test="userPassword!=null and userPassword!='' and userPassword!='null'">
+                ,user_password=#{userPassword}
+            </if>
+            <if test="userShowName!=null and userShowName!='' and userShowName!='null'">
+                ,user_show_name=#{userShowName}
+            </if>
+            <if test="userDesc!=null and userDesc!='' and userDesc!='null'">,user_desc=#{userDesc}</if>
+            <if test="roleId!= null and roleId !='' ">,role_id=#{roleId}</if>
+        </trim>
+        WHERE id=#{id} ;
+    </update>
+
+    <delete id="delete">
+        DELETE FROM t_user WHERE id=#{id}
+    </delete>
+
+    <select id="getRolesByUserName" resultType="String">
+        SELECT
+        r.role_name
+        FROM t_user u,t_role r
+        WHERE r.id=u.role_id
+        AND u.user_name =#{userName}
+    </select>
+
+    <select id="getPermissionsByUserName" resultType="String">
+        SELECT r.role_name
+        FROM t_user u,t_role r,t_permission p
+        WHERE u.role_id = r.id
+        AND p.role_id = r.id
+        AND u.user_name=#{userName}
+    </select>
+
+    <select id="getPermissionByRoleId" resultType="java.lang.Integer">
+        SELECT
+        tp.id,tp.permission_name
+        FROM
+        t_permission tp,t_role tr,t_role_perm_link trpl
+        WHERE tp.id=trpl.permission_id
+        AND tr.id=trpl.role_id
+        AND tr.id=#{roleId}
+    </select>
+
+    <delete id="deleteRolePermsByRoleId">
+        DELETE FROM t_role_perm_link WHERE role_id=#{roleId}
+    </delete>
+
+    <insert id="insertRolePermsLink" parameterType="java.util.List">
+        INSERT
+        ignore
+        INTO
+        t_role_perm_link (gmt_create,gmt_modified,role_id,permission_id)
+        VALUES
+        <foreach collection="list" item="rolePerms" index="index" separator=",">
+            (CURRENT_TIME,CURRENT_TIME,#{rolePerms.roleId},#{rolePerms.permissionId})
+        </foreach>
+    </insert>
+
+</mapper>
