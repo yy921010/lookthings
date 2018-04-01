@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lookthings.iml" filepath="$PROJECT_DIR$/lookthings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lookthings-core/lookthings-core.iml" filepath="$PROJECT_DIR$/lookthings-core/lookthings-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lookthings-users/lookthings-users.iml" filepath="$PROJECT_DIR$/lookthings-users/lookthings-users.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lookthings-web/lookthings-web.iml" filepath="$PROJECT_DIR$/lookthings-web/lookthings-web.iml" />
+    </modules>
+  </component>
+</project>

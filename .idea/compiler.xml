@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lookthing-core" />
+        <module name="lookthings-core" />
+        <module name="lookthings-users" />
+        <module name="lookthings-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="lookthings" target="1.8" />
+      <module name="lookthings-core" target="1.8" />
+      <module name="lookthings-users" target="1.8" />
+      <module name="lookthings-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="lookthings-web:war">
+    <output-path>$PROJECT_DIR$/lookthings-web/target</output-path>
+    <root id="archive" name="lookthings.web.war">
+      <element id="artifact" artifact-name="lookthings-web:war exploded" />
+    </root>
+  </artifact>
+</component>
