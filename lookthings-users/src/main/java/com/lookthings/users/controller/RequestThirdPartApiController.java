@@ -1,8 +1,8 @@
 package com.lookthings.users.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.lookthings.core.service.impl.CommonConfig;
 import com.lookthings.core.utils.RegexUtils;
-import com.lookthings.users.service.impl.CommonConfig;
 import com.lookthings.core.json.JsonResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,12 +1,12 @@
 package com.lookthings.users.controller;
 
+import com.lookthings.core.service.impl.CommonConfig;
 import com.lookthings.core.utils.SystemUtils;
 import com.lookthings.users.model.PermissionDO;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.PermissionService;
 import com.lookthings.users.service.RoleService;
 import com.lookthings.users.service.UserService;
-import com.lookthings.users.service.impl.CommonConfig;
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.users.vo.RolePermsLinkVO;
 import com.lookthings.users.vo.UserSuccessVO;

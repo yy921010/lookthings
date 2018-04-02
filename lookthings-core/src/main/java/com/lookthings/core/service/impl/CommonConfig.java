@@ -1,4 +1,4 @@
-package com.lookthings.users.service.impl;
+package com.lookthings.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
