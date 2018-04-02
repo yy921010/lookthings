@@ -2,7 +2,7 @@ package com.lookthings.users.controller;
 
 import com.lookthings.users.model.PermissionDO;
 import com.lookthings.users.service.PermissionService;
-import com.lookthings.users.vo.JsonResult;
+import com.lookthings.core.json.JsonResult;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

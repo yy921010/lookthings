@@ -1,4 +1,4 @@
-package com.lookthings.users.vo;
+package com.lookthings.core.json;
 
 /**
  * 最终封装数据
@@ -78,7 +78,7 @@ public class JsonResult<T> {
     /**
      * Sets result.
      *
-     * @param data the data
+     * @param result the data
      */
     public void setResult(T result) {
         this.result = result;

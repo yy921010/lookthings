@@ -10,6 +10,10 @@
     <packaging>war</packaging>
     <name>lookthings.web Maven Webapp</name>
     <url>http://maven.apache.org</url>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <dependencies>
         <!--添加对lookthings.core的依赖-->
         <dependency>
