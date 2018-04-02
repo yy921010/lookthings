@@ -2,7 +2,7 @@ package com.lookthings.users.realm;
 
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
-import com.lookthings.users.service.impl.CommonConfig;
+import com.lookthings.core.service.impl.CommonConfig;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

@@ -29,6 +29,7 @@
     <!-- 自动将Service层注入-->
     <context:component-scan base-package="com.lookthings.**.service"/>
 
+
     <!-- dbcp数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
           destroy-method="close">

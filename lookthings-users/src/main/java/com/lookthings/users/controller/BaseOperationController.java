@@ -1,7 +1,7 @@
 package com.lookthings.users.controller;
 
 
-import com.lookthings.users.vo.JsonResult;
+import com.lookthings.core.json.JsonResult;
 
 import java.util.List;
 

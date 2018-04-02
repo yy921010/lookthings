@@ -10,7 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lookthings.users</artifactId>
-
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <!-- 添加start-->
     <packaging>jar</packaging>
     <!--添加end -->
@@ -23,5 +26,4 @@
         </dependency>
     </dependencies>
     <!-- 添加start-->
-
 </project>
