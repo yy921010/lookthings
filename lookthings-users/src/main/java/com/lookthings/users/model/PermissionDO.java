@@ -10,7 +10,6 @@ import java.util.Date;
 public class PermissionDO {
     private Integer id;
     private String permissionName;
-    private Integer roleId;
     private Date gmtCreate;
     private Date gmtModified;
     private String permissionDesc;
@@ -29,14 +28,6 @@ public class PermissionDO {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
     }
 
     public Date getGmtCreate() {
@@ -68,7 +59,6 @@ public class PermissionDO {
         return "PermissionDO{" +
                 "id=" + id +
                 ", permissionName='" + permissionName + '\'' +
-                ", roleId=" + roleId +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
                 ", permissionDesc='" + permissionDesc + '\'' +

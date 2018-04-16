@@ -11,11 +11,12 @@ public class UserDO {
     private Integer id;
     private String userName;
     private String userPassword;
-    private String userShowName;
+    private String userDescription;
+    private String userMail;
+    private Integer mailValid;
     private Integer roleId;
     private Date gmtCreate;
     private Date gmtModified;
-    private String userDesc;
 
     public Integer getId() {
         return id;
@@ -41,12 +42,28 @@ public class UserDO {
         this.userPassword = userPassword;
     }
 
-    public String getUserShowName() {
-        return userShowName;
+    public String getUserDescription() {
+        return userDescription;
     }
 
-    public void setUserShowName(String userShowName) {
-        this.userShowName = userShowName;
+    public void setUserDescription(String userDescription) {
+        this.userDescription = userDescription;
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail;
+    }
+
+    public Integer getMailValid() {
+        return mailValid;
+    }
+
+    public void setMailValid(Integer mailValid) {
+        this.mailValid = mailValid;
     }
 
     public Integer getRoleId() {
@@ -73,26 +90,18 @@ public class UserDO {
         this.gmtModified = gmtModified;
     }
 
-    public String getUserDesc() {
-        return userDesc;
-    }
-
-    public void setUserDesc(String userDesc) {
-        this.userDesc = userDesc;
-    }
-
     @Override
     public String toString() {
         return "UserDO{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
-                ", userShowName='" + userShowName + '\'' +
+                ", userDescription='" + userDescription + '\'' +
+                ", userMail='" + userMail + '\'' +
+                ", mailValid=" + mailValid +
                 ", roleId=" + roleId +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
-                ", userDesc='" + userDesc + '\'' +
                 '}';
     }
-
 }
