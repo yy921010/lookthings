@@ -33,7 +33,7 @@
 ```html
 ├── .idea
 ├── lookthings-core            common，通用模块，用于工具类，枚举类集合
-├── lookthings-users           用户模块
+├── lookthings-com.lookthings.users           用户模块
 ├── lookthings-web             web，与外部接口
 |    └── src
 |         ├── main

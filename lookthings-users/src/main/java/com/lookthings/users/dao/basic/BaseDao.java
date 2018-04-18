@@ -16,7 +16,7 @@ public interface BaseDao<T> {
      * @param var the var
      * @return the boolean
      */
-    Boolean insert(T var);
+    Boolean insert(List<T> var);
 
     /**
      * Delete boolean.
@@ -24,7 +24,7 @@ public interface BaseDao<T> {
      * @param var the var
      * @return the boolean
      */
-    Boolean delete(T var);
+    Boolean delete(int[] var);
 
     /**
      * Update boolean.
@@ -32,7 +32,7 @@ public interface BaseDao<T> {
      * @param var the var
      * @return the boolean
      */
-    Boolean update(T var);
+    Boolean update(List<T> var);
 
     /**
      * Select list.
