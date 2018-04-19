@@ -32,7 +32,7 @@
     <update id="update" parameterType="java.util.List">
         UPDATE t_user
         <trim prefix="SET" suffixOverrides=",">
-            <trim prefix="user_name = CASE" suffix="END,">
+            <trim prefix="user_name = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
                     <if test="i.userName!=null and i.userName!='' and i.userName!='null'">
                         WHEN id=#{i.id}
@@ -40,7 +40,7 @@
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="user_password = CASE" suffix="END,">
+            <trim prefix="user_password = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
                     <if test="i.userPassword!=null and i.userPassword!='' and i.userPassword!='null'">
                         WHEN id=#{i.id}
@@ -48,7 +48,7 @@
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="user_description = CASE" suffix="END,">
+            <trim prefix="user_description = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
                     <if test="i.userDescription!=null and i.userDescription!='' and i.userDescription!='null'">
                         WHEN id=#{i.id}
@@ -56,7 +56,7 @@
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="user_mail = CASE" suffix="END,">
+            <trim prefix="user_mail = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
                     <if test="i.userMail!=null and i.userMail!='' and i.userMail!='null'">
                         WHEN id=#{i.id}
@@ -64,33 +64,32 @@
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="mail_valid = CASE" suffix="END,">
+            <trim prefix="mail_valid = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
-                    <if test="i.mailValid!=null and i.mailValid!='' and i.mailValid!='null'">
+                    <if test="i.mailValid!=null and i.mailValid!=''">
                         WHEN id=#{i.id}
                         THEN #{i.mailValid}
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="role_id = CASE" suffix="END,">
+            <trim prefix="role_id = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
-                    <if test="i.roleId!=null and i.roleId!='' and i.roleId!='null'">
+                    <if test="i.roleId!=null and i.roleId!=''">
                         WHEN id=#{i.id}
                         THEN #{i.roleId}
                     </if>
                 </foreach>
             </trim>
-            <trim prefix="gmt_modified = CASE" suffix="END,">
+            <trim prefix="gmt_modified = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
-                    <if test="true">
-                        WHEN id=#{i.id}
-                        THEN CURRENT_TIME
-                    </if>
+                    WHEN id=#{i.id}
+                    THEN CURRENT_DATE
                 </foreach>
             </trim>
         </trim>
-        <foreach collection="list" separator="or" item="i" index="index">
-            WHERE id=#{i.id}
+        WHERE id IN
+        <foreach collection="list" separator="," item="i" index="index" open="(" close=")">
+            #{i.id}
         </foreach>
     </update>
 

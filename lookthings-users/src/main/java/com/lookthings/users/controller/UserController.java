@@ -26,7 +26,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/getUser")
     public JsonResult<List<UserDO>> select(String userId) {
-        JsonResult<List<UserDO>> jsonResult = new JsonResult<List<UserDO>>();
+        JsonResult<List<UserDO>> jsonResult = new JsonResult();
         UserDO userDO = new UserDO();
         if (userId != null) {
             userDO.setId(new Integer(userId));
