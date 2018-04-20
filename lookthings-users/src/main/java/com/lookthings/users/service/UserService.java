@@ -1,6 +1,7 @@
 package com.lookthings.users.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.lookthings.users.model.UserDO;
 
 import java.util.List;
@@ -13,12 +14,14 @@ import java.util.List;
 public interface UserService {
 
     /**
-     * Gets com.lookthings.users by user info.
+     * Gets all users.
      *
-     * @param u the u
-     * @return the com.lookthings.users by user info
+     * @param u        the u
+     * @param pageNo   the page no
+     * @param pageSize the page size
+     * @return the all users
      */
-    List<UserDO> getUsersByUserInfo(UserDO u);
+    PageInfo<UserDO> getUsersByPageIndex(UserDO u, Integer pageNo, Integer pageSize);
 
     /**
      * Insert user by user info boolean.

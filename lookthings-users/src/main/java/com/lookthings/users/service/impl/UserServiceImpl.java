@@ -1,5 +1,7 @@
 package com.lookthings.users.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lookthings.users.dao.UserDao;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
@@ -17,10 +19,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
-
     @Override
-    public List<UserDO> getUsersByUserInfo(UserDO u) {
-        return userDao.select(u);
+    public PageInfo<UserDO> getUsersByPageIndex(UserDO u, Integer pageNo, Integer pageSize) {
+        pageNo = pageNo == null ? 1 : pageNo;
+        pageSize = pageSize == null ? 10 : pageSize;
+        PageHelper.startPage(pageNo, pageSize);
+        List<UserDO> userDOS = userDao.select(u);
+        return (PageInfo<UserDO>) new PageInfo(userDOS);
     }
 
     @Override
