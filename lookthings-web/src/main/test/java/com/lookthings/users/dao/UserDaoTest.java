@@ -63,8 +63,7 @@ public class UserDaoTest extends BaseTest {
 
     @Test
     public void TestDeleteUser() {
-        int[] userids = {1, 2, 3, 4, 5, 6};
-        System.out.println(userDao.delete(userids));
+        //System.out.println(userDao.delete(userids));
     }
 
 }

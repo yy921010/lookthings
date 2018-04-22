@@ -1,5 +1,8 @@
 package com.lookthings.users.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.users.model.UserDO;
@@ -8,9 +11,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,9 +53,13 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/insertUserBatch")
-    public JsonResult<String> InsertUserBatch(@RequestBody List<UserDO> userDOS) {
+    public JsonResult<String> insertUserBatch(String userDOS) {
         JsonResult<String> jsonResult = new JsonResult();
-        Boolean isSuccess = userService.insertUserByUserInfo(userDOS);
+        if (userDOS == null) {
+            return jsonResult;
+        }
+        List<UserDO> userList = JSONArray.parseArray(userDOS, UserDO.class);
+        Boolean isSuccess = userService.insertUserByUserInfo(userList);
         jsonResult.setSuccess(isSuccess);
         jsonResult.setResult("");
         return jsonResult;
@@ -58,9 +67,26 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/updateUserBatch")
-    public JsonResult<String> updateUserBatch(@RequestBody List<UserDO> userDOS) {
+    public JsonResult<String> updateUserBatch(String userDOS) {
         JsonResult<String> jsonResult = new JsonResult();
-        Boolean isSuccess = userService.updateUserByUserInfo(userDOS);
+        if (userDOS == null) {
+            return jsonResult;
+        }
+        List<UserDO> userList = JSONArray.parseArray(userDOS, UserDO.class);
+        Boolean isSuccess = userService.updateUserByUserInfo(userList);
+        jsonResult.setSuccess(isSuccess);
+        jsonResult.setResult("");
+        return jsonResult;
+    }
+
+    @ResponseBody
+    @RequestMapping("/deleteUserBatch")
+    public JsonResult<String> deleteUserBatch(Integer[] userIds) {
+        JsonResult<String> jsonResult = new JsonResult();
+        if (userIds == null) {
+            return jsonResult;
+        }
+        Boolean isSuccess = userService.deleteUserByUserInfo(userIds);
         jsonResult.setSuccess(isSuccess);
         jsonResult.setResult("");
         return jsonResult;

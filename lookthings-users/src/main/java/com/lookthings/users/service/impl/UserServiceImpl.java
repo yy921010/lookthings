@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean deleteUserByUserInfo(int[] u) {
+    public Boolean deleteUserByUserInfo(Integer[] u) {
         return userDao.delete(u);
     }
 
