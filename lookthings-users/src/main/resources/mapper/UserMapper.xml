@@ -12,10 +12,7 @@
             <if test="id!= null and id !='' ">id=#{id}</if>
             <if test="userName!= null and userName !=''and userName!='null' ">user_name=#{userName}</if>
         </trim>
-    </select>
-
-    <select id="userCount" resultType="java.lang.Integer">
-        SELECT COUNT(id) FROM t_user
+        ORDER BY gmt_modified DESC
     </select>
 
     <insert id="insert" parameterType="java.util.List">
@@ -93,9 +90,9 @@
         </foreach>
     </update>
 
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="java.util.List">
         DELETE FROM t_user WHERE id IN
-        <foreach item="userId" collection="array" open="(" separator="," close=")">
+        <foreach item="userId" collection="list" open="(" separator="," close=")">
             #{userId}
         </foreach>
     </delete>

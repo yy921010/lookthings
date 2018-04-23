@@ -37,7 +37,7 @@ public interface UserService {
      * @param u the u
      * @return the boolean
      */
-    Boolean deleteUserByUserInfo(Integer[] u);
+    Boolean deleteUserByUserInfo(List<Integer> u);
 
     /**
      * Update user by user info boolean.

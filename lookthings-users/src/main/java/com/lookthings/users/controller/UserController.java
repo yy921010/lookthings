@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +31,15 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
+    /**
+     * 根据用户参数进行用户的查询
+     *
+     * @param userId
+     * @param userName
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getUsers")
     public JsonResult<PageInfo<UserDO>> getUsers(String userId, String userName, Integer pageNo, Integer pageSize) {
@@ -51,46 +60,67 @@ public class UserController {
         return jsonResult;
     }
 
+    /**
+     * 批量插入用户数据
+     *
+     * @param userDOS
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/insertUserBatch")
-    public JsonResult<String> insertUserBatch(String userDOS) {
-        JsonResult<String> jsonResult = new JsonResult();
+    public JsonResult<Boolean> insertUserBatch(String userDOS) {
+        JsonResult<Boolean> jsonResult = new JsonResult();
         if (userDOS == null) {
             return jsonResult;
         }
         List<UserDO> userList = JSONArray.parseArray(userDOS, UserDO.class);
         Boolean isSuccess = userService.insertUserByUserInfo(userList);
         jsonResult.setSuccess(isSuccess);
-        jsonResult.setResult("");
+        jsonResult.setResult(isSuccess);
         return jsonResult;
     }
 
+    /**
+     * 批量更新用户
+     *
+     * @param userDOS
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/updateUserBatch")
-    public JsonResult<String> updateUserBatch(String userDOS) {
-        JsonResult<String> jsonResult = new JsonResult();
+    public JsonResult<Boolean> updateUserBatch(String userDOS) {
+        JsonResult<Boolean> jsonResult = new JsonResult();
         if (userDOS == null) {
             return jsonResult;
         }
         List<UserDO> userList = JSONArray.parseArray(userDOS, UserDO.class);
         Boolean isSuccess = userService.updateUserByUserInfo(userList);
         jsonResult.setSuccess(isSuccess);
-        jsonResult.setResult("");
+        jsonResult.setResult(isSuccess);
         return jsonResult;
     }
 
+    /**
+     * 批量删除用户
+     *
+     * @param userDOS
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/deleteUserBatch")
-    public JsonResult<String> deleteUserBatch(Integer[] userIds) {
-        JsonResult<String> jsonResult = new JsonResult();
-        if (userIds == null) {
+    public JsonResult<Boolean> deleteUserBatch(String userDOS) {
+        JsonResult<Boolean> jsonResult = new JsonResult();
+        if (userDOS == null) {
             return jsonResult;
         }
-        Boolean isSuccess = userService.deleteUserByUserInfo(userIds);
+        List<String> userIds = JSONArray.parseArray(userDOS, String.class);
+        List<Integer> userIdsInt = new ArrayList<>();
+        for (String Item : userIds) {
+            userIdsInt.add(Integer.parseInt(Item));
+        }
+        Boolean isSuccess = userService.deleteUserByUserInfo(userIdsInt);
         jsonResult.setSuccess(isSuccess);
-        jsonResult.setResult("");
+        jsonResult.setResult(isSuccess);
         return jsonResult;
     }
-
-
 }

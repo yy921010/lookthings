@@ -24,7 +24,7 @@ public interface BaseDao<T> {
      * @param var the var
      * @return the boolean
      */
-    Boolean delete(Integer[] var);
+    Boolean delete(List<Integer> var);
 
     /**
      * Update boolean.

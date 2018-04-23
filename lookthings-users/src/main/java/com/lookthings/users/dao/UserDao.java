@@ -11,11 +11,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserDao extends BaseDao<UserDO> {
-    /**
-     * User count integer.
-     *
-     * @return the integer
-     */
-    Integer userCount();
-
 }
