@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lookthings.users.dao.PermissionDao">
+    <sql id="role_list_field">id,gmt_create,gmt_modified,permission_name,permission_desc</sql>
+
+    <select id="select" resultType="com.lookthings.users.model.PermissionDO">
+        SELECT
+        <include refid="role_list_field"/>
+        FROM t_permission
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id!= null and id !='' ">id=#{id}</if>
+            <if test="permissionName!= null and permissionName !=''and permissionName!='null' ">
+                permission_name=#{permissionName}
+            </if>
+        </trim>
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <insert id="insert" parameterType="java.util.List">
+        INSERT
+        ignore
+        INTO
+        t_permission (gmt_create,gmt_modified,permission_name,permission_desc)
+        VALUES
+        <foreach collection="list" item="permis" index="index" separator=",">
+            (CURRENT_TIME,CURRENT_TIME,#{permis.permissionName},#{permis.permissionDesc})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="java.util.List">
+        UPDATE t_permission
+        <trim prefix="SET" suffixOverrides=",">
+            <trim prefix="permission_name = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.permissionName!=null and i.permissionName!='' and i.permissionName!='null'">
+                        WHEN id=#{i.id}
+                        THEN #{i.permissionName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="permission_desc = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.permissionDesc!=null and i.permissionDesc!='' and i.permissionDesc!='null'">
+                        WHEN id=#{i.id}
+                        THEN #{i.permissionDesc}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="gmt_modified = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    WHEN id=#{i.id}
+                    THEN CURRENT_DATE
+                </foreach>
+            </trim>
+        </trim>
+        WHERE id IN
+        <foreach collection="list" separator="," item="i" index="index" open="(" close=")">
+            #{i.id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="java.util.List">
+        DELETE FROM t_permission WHERE id IN
+        <foreach item="permisId" collection="list" open="(" separator="," close=")">
+            #{permisId}
+        </foreach>
+    </delete>
+
+</mapper>

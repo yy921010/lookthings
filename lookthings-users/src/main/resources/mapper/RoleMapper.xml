@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lookthings.users.dao.RoleDao">
+    <sql id="role_list_field">id,gmt_create,gmt_modified,role_name,role_description</sql>
+
+    <select id="select" resultType="com.lookthings.users.model.RoleDO">
+        SELECT
+        <include refid="role_list_field"/>
+        FROM t_role
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="id!= null and id !='' ">id=#{id}</if>
+            <if test="roleName!= null and roleName !=''and roleName!='null' ">role_name=#{roleName}</if>
+        </trim>
+        ORDER BY gmt_modified DESC
+    </select>
+
+
+    <insert id="insert" parameterType="java.util.List">
+        INSERT
+        ignore
+        INTO
+        t_role (gmt_create,gmt_modified,role_name,role_description)
+        VALUES
+        <foreach collection="list" item="role" index="index" separator=",">
+            (CURRENT_TIME,CURRENT_TIME,#{role.roleName},#{role.roleDescription})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="java.util.List">
+        UPDATE t_role
+        <trim prefix="SET" suffixOverrides=",">
+            <trim prefix="role_name = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.roleName!=null and i.roleName!='' and i.roleName!='null'">
+                        WHEN id=#{i.id}
+                        THEN #{i.roleName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="role_description = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.roleDescription!=null and i.roleDescription!='' and i.roleDescription!='null'">
+                        WHEN id=#{i.id}
+                        THEN #{i.roleDescription}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="gmt_modified = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    WHEN id=#{i.id}
+                    THEN CURRENT_DATE
+                </foreach>
+            </trim>
+        </trim>
+        WHERE id IN
+        <foreach collection="list" separator="," item="i" index="index" open="(" close=")">
+            #{i.id}
+        </foreach>
+    </update>
+
+    <delete id="delete" parameterType="java.util.List">
+        DELETE FROM t_role WHERE id IN
+        <foreach item="roleId" collection="list" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
+</mapper>
