@@ -1,22 +1,17 @@
 package com.lookthings.users.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,10 +39,6 @@ public class UserController {
     @RequestMapping("/getUsers")
     public JsonResult<PageInfo<UserDO>> getUsers(String userId, String userName, Integer pageNo, Integer pageSize) {
         JsonResult<PageInfo<UserDO>> jsonResult = new JsonResult();
-        log.info("[getUsers][userId]" + userId);
-        log.info("[getUsers][userName]" + userName);
-        log.info("[getUsers][pageNo]" + pageNo);
-        log.info("[getUsers][pageSize]" + pageNo);
         UserDO userDO = new UserDO();
         if (userId != null) {
             userDO.setId(new Integer(userId));
@@ -55,6 +46,7 @@ public class UserController {
         if (userName != null) {
             userDO.setUserName(userName);
         }
+        log.debug("[getUsers] [userDO]" + userDO.toString());
         jsonResult.setSuccess(true);
         jsonResult.setResult(userService.getUsersByPageIndex(userDO, pageNo, pageSize));
         return jsonResult;
