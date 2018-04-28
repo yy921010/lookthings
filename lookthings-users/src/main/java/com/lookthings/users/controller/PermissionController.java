@@ -110,9 +110,15 @@ public class PermissionController {
         }
         List<String> permissionIds = JSONArray.parseArray(permissionDOS, String.class);
         List<Integer> permissionIdInt = new ArrayList<>();
+        if (permissionIds.size() == 0) {
+            jsonResult.setSuccess(false);
+            jsonResult.setResult(false);
+            return jsonResult;
+        }
         for (String Item : permissionIds) {
             permissionIdInt.add(Integer.parseInt(Item));
         }
+
         Boolean isSuccess = permissionService.deletePermissionByPermissionInfo(permissionIdInt);
         jsonResult.setSuccess(isSuccess);
         jsonResult.setResult(isSuccess);
