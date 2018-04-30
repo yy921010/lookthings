@@ -124,6 +124,4 @@ public class PermissionController {
         jsonResult.setResult(isSuccess);
         return jsonResult;
     }
-
-
 }

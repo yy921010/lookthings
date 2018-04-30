@@ -1,7 +1,7 @@
 package com.lookthings.users.dao;
 
+import com.lookthings.users.model.AssociatedRolePermissionDO;
 import com.lookthings.users.model.PermissionDO;
-import com.lookthings.users.model.RolePermisAssociation;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Fantasy
  */
-public interface AssocicationRolePermis {
+public interface AssociationRolePermisDao {
 
     /**
      * Gets roles by user name.
@@ -52,5 +52,5 @@ public interface AssocicationRolePermis {
      * @param rolePermsList the role perms list
      * @return the boolean
      */
-    Boolean insertRolePermsLink(List<RolePermisAssociation> rolePermsList);
+    Boolean insertRolePermsLink(List<AssociatedRolePermissionDO> rolePermsList);
 }

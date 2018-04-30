@@ -5,9 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.lookthings.users.dao.UserDao;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +22,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
+
+    private static Logger log = Logger.getLogger(UserServiceImpl.class);
+
     @Override
     public PageInfo<UserDO> getUsersByPageIndex(UserDO u, Integer pageNo, Integer pageSize) {
         pageNo = pageNo == null ? 1 : pageNo;
@@ -40,6 +46,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean updateUserByUserInfo(List<UserDO> u) {
+        u.forEach(user -> {
+            user.setGmtModified(new Date());
+            log.info("[updateUserByUserInfo] [user]" + user.toString());
+        });
         return userDao.update(u);
     }
 }

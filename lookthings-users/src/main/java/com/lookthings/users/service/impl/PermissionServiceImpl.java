@@ -8,6 +8,7 @@ import com.lookthings.users.service.PermissionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,9 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public Boolean updatePermissionByPermissionInfo(List<PermissionDO> u) {
+        u.forEach(permission -> {
+            permission.setGmtModified(new Date());
+        });
         return permissionDao.update(u);
     }
 }

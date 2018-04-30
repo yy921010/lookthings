@@ -8,6 +8,7 @@ import com.lookthings.users.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,6 +70,9 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public Boolean updateRoleByRoleInfo(List<RoleDO> u) {
+        u.forEach(role -> {
+            role.setGmtModified(new Date());
+        });
         return roleDao.update(u);
     }
 }

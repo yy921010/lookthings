@@ -79,8 +79,10 @@
             </trim>
             <trim prefix="gmt_modified = case" suffix="end,">
                 <foreach collection="list" item="i" index="index">
-                    WHEN id=#{i.id}
-                    THEN CURRENT_DATE
+                    <if test="i.gmtModified!=null and i.gmtModified!='' and i.gmtModified!='null'">
+                        WHEN id=#{i.id}
+                        THEN #{i.gmtModified}
+                    </if>
                 </foreach>
             </trim>
         </trim>
