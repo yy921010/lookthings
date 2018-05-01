@@ -3,6 +3,7 @@ package com.lookthings.users.service.impl;
 import com.lookthings.users.dao.AssociationRolePermisDao;
 import com.lookthings.users.model.AssociatedRolePermissionDO;
 import com.lookthings.users.model.PermissionDO;
+import com.lookthings.users.model.RoleDO;
 import com.lookthings.users.service.AssociatedRolePermsService;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,8 @@ public class AssociatedRolePermsImpl implements AssociatedRolePermsService {
      * @return the roles by user name
      */
     @Override
-    public Set<String> getRolesByUserName(String userName) {
-        return associationRolePermisDao.getRolesByUserName(userName);
+    public Set<String> getRolesNameByUserName(String userName) {
+        return associationRolePermisDao.getRolesNameByUserName(userName);
     }
 
     /**
@@ -68,11 +69,16 @@ public class AssociatedRolePermsImpl implements AssociatedRolePermsService {
     /**
      * Insert role perms link boolean.
      *
-     * @param rolePermsList the role perms list
+     * @param associatedRolePermissionDOS the role perms list
      * @return the boolean
      */
     @Override
     public Boolean insertRolePermsLink(List<AssociatedRolePermissionDO> associatedRolePermissionDOS) {
         return associationRolePermisDao.insertRolePermsLink(associatedRolePermissionDOS);
+    }
+
+    @Override
+    public List<RoleDO> getRolesByUserName(Integer userId) {
+        return associationRolePermisDao.getRolesByUserName(userId);
     }
 }
