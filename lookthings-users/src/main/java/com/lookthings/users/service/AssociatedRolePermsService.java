@@ -2,7 +2,7 @@ package com.lookthings.users.service;
 
 import com.lookthings.users.model.AssociatedRolePermissionDO;
 import com.lookthings.users.model.PermissionDO;
-import com.lookthings.users.model.RoleDO;
+import com.lookthings.users.vo.UserRoleLinkVO;
 
 import java.util.List;
 import java.util.Set;
@@ -57,5 +57,11 @@ public interface AssociatedRolePermsService {
     Boolean insertRolePermsLink(List<AssociatedRolePermissionDO> rolePermsList);
 
 
-    List<RoleDO> getRolesByUserName(Integer userId);
+    /**
+     * Gets roles by user name.
+     *
+     * @param userId the user id
+     * @return the roles by user name
+     */
+    List<UserRoleLinkVO> getRolesByUserId(Integer userId);
 }

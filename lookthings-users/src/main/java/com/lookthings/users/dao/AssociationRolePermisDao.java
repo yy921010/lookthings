@@ -2,7 +2,7 @@ package com.lookthings.users.dao;
 
 import com.lookthings.users.model.AssociatedRolePermissionDO;
 import com.lookthings.users.model.PermissionDO;
-import com.lookthings.users.model.RoleDO;
+import com.lookthings.users.vo.UserRoleLinkVO;
 
 import java.util.List;
 import java.util.Set;
@@ -28,7 +28,7 @@ public interface AssociationRolePermisDao {
      * @param userId the user id
      * @return the roles by user name
      */
-    List<RoleDO> getRolesByUserName(Integer userId);
+    List<UserRoleLinkVO> getRolesByUserId(Integer userId);
 
     /**
      * Gets permissions by user name.

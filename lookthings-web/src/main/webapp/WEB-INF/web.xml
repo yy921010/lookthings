@@ -88,4 +88,9 @@
         <error-code>404</error-code>
         <location>/WEB-INF/src/component/404.jsp</location>
     </error-page>
+    <!-- 500 服务器内部错误 -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/src/component/500.jsp</location>
+    </error-page>
 </web-app>
