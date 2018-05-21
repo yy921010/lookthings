@@ -35,7 +35,7 @@
         SELECT
         tp.id,tp.permission_name
         FROM
-        t_permission tp,t_role tr,t_role_perm_link trpl
+        t_permission tp,t_role tr,t_role_permis_association trpl
         WHERE tp.id=trpl.permission_id
         AND tr.id=trpl.role_id
         AND tr.id=#{roleId}

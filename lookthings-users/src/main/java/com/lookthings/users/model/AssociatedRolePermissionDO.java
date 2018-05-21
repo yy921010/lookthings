@@ -1,6 +1,5 @@
 package com.lookthings.users.model;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 /**
@@ -14,7 +13,7 @@ public class AssociatedRolePermissionDO {
     private Integer roleId;
     private Integer permissionId;
     private Date gmtCreate;
-    private Data gmtModified;
+    private Date gmtModified;
 
     public Integer getId() {
         return id;
@@ -48,11 +47,11 @@ public class AssociatedRolePermissionDO {
         this.gmtCreate = gmtCreate;
     }
 
-    public Data getGmtModified() {
+    public Date getGmtModified() {
         return gmtModified;
     }
 
-    public void setGmtModified(Data gmtModified) {
+    public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
 
