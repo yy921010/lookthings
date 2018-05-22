@@ -1,6 +1,7 @@
 package com.lookthings.users.realm;
 
 import com.lookthings.users.model.UserDO;
+import com.lookthings.users.service.AssociatedRolePermsService;
 import com.lookthings.users.service.UserService;
 import com.lookthings.core.service.impl.CommonConfig;
 import org.apache.log4j.Logger;
@@ -30,6 +31,10 @@ public class MyRealm extends AuthorizingRealm {
     @Resource
     private CommonConfig commonConfig;
 
+
+    @Resource
+    private AssociatedRolePermsService associatedRolePermsService;
+
     private static Logger log = Logger.getLogger(MyRealm.class);
 
     /**
@@ -40,16 +45,16 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-//        String userName = principalCollection.getPrimaryPrincipal().toString();
-//        log.debug("[doGetAuthorizationInfo] [username]" + userName);
-//        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//        Set<String> roles = userService.getRolesByUserName(userName);
-//        log.debug("[doGetAuthorizationInfo] [roles]" + roles);
-//        Set<String> permissions = userService.getPermissionsByUserName(userName);
-//        log.debug("[doGetAuthorizationInfo] [permissions]" + permissions);
-//        info.setRoles(roles);
-//        info.setStringPermissions(permissions);
-        return null;
+        String userName = principalCollection.getPrimaryPrincipal().toString();
+        log.debug("[doGetAuthorizationInfo] [username]" + userName);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Set<String> roles = associatedRolePermsService.getRolesNameByUserName(userName);
+        log.debug("[doGetAuthorizationInfo] [roles]" + roles);
+        Set<String> permissions = associatedRolePermsService.getPermissionsByUserName(userName);
+        log.debug("[doGetAuthorizationInfo] [permissions]" + permissions);
+        info.setRoles(roles);
+        info.setStringPermissions(permissions);
+        return info;
     }
 
     /**
@@ -61,17 +66,17 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-       /* String userName = (String) authenticationToken.getPrincipal();
+        String userName = (String) authenticationToken.getPrincipal();
         UserDO userDO = new UserDO();
         userDO.setUserName(userName);
-        List<UserDO> userDOList = userService.findListUser(userDO);
-        UserDO userFirstModel = userDOList.get(0);
-        if (userFirstModel != null) {
+        List<UserDO> userModels = userService.getUsersByPageIndex(userDO);
+        UserDO userModel = userModels.get(0);
+        if (null != userModels) {
             ByteSource salt = ByteSource.Util.bytes(commonConfig.getIsaKey());
-            AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userFirstModel.getUserName(), userFirstModel.getUserPassword(), salt, this.getName());
+            AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userModel.getUserName(), userModel.getUserPassword(), salt, this.getName());
             log.debug("[doGetAuthenticationInfo] [authenticationInfo] " + authenticationInfo.toString());
             return authenticationInfo;
-        }*/
+        }
         return null;
     }
 }

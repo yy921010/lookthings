@@ -35,6 +35,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserDO> getUsersByPageIndex(UserDO u) {
+        return userDao.select(u);
+    }
+
+    @Override
     public Boolean deleteUserByUserInfo(List<Integer> u) {
         return userDao.delete(u);
     }
@@ -51,5 +56,16 @@ public class UserServiceImpl implements UserService {
             log.info("[updateUserByUserInfo] [user]" + user.toString());
         });
         return userDao.update(u);
+    }
+
+    /**
+     * Find user model by user name user do.
+     *
+     * @param userName the user name
+     * @return the user do
+     */
+    @Override
+    public UserDO findUserModelByUserName(String userName) {
+        return userDao.findUserModelByUserName(userName);
     }
 }

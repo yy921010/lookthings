@@ -24,6 +24,14 @@ public interface UserService {
     PageInfo<UserDO> getUsersByPageIndex(UserDO u, Integer pageNo, Integer pageSize);
 
     /**
+     * Gets users by page index.
+     *
+     * @param u the u
+     * @return the users by page index
+     */
+    List<UserDO> getUsersByPageIndex(UserDO u);
+
+    /**
      * Insert user by user info boolean.
      *
      * @param u the u
@@ -46,4 +54,12 @@ public interface UserService {
      * @return the boolean
      */
     Boolean updateUserByUserInfo(List<UserDO> u);
+
+    /**
+     * Find user model by user name user do.
+     *
+     * @param userName the user name
+     * @return the user do
+     */
+    UserDO findUserModelByUserName(String userName);
 }

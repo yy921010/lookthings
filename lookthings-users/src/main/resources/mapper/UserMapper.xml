@@ -15,6 +15,17 @@
         ORDER BY gmt_modified DESC
     </select>
 
+
+    <select id="findUserModelByUserName" resultType="com.lookthings.users.model.UserDO" parameterType="String">
+        SELECT
+        <include refid="user_list_field"/>
+        FROM t_user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="userName!= null and userName !=''and userName!='null' ">user_name=#{userName}</if>
+        </trim>
+        ORDER BY gmt_modified DESC
+    </select>
+
     <insert id="insert" parameterType="java.util.List">
         INSERT
         ignore

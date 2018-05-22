@@ -11,4 +11,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserDao extends BaseDao<UserDO> {
+
+    /**
+     * Find user model by user name user do.
+     *
+     * @param userName the user name
+     * @return the user do
+     */
+    UserDO findUserModelByUserName(String userName);
 }
