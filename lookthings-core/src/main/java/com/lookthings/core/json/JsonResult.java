@@ -20,10 +20,20 @@ public class JsonResult<T> {
 
     private String reason;
 
+    private String errorCode;
+
     /**
      * Instantiates a new Json result.
      */
     public JsonResult() {
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     /**
@@ -46,6 +56,18 @@ public class JsonResult<T> {
     public JsonResult(boolean success, String error) {
         this.success = success;
         this.error = error;
+    }
+
+    /**
+     * 错误时的构造器
+     *
+     * @param success the success
+     * @param error   the error
+     */
+    public JsonResult(boolean success, String error, String errorCode) {
+        this.success = success;
+        this.error = error;
+        this.errorCode = errorCode;
     }
 
     /**
@@ -122,6 +144,12 @@ public class JsonResult<T> {
 
     @Override
     public String toString() {
-        return "{success=" + success + ", data=" + result + ", error=" + error + "}";
+        return "JsonResult{" +
+                "success=" + success +
+                ", result=" + result +
+                ", error='" + error + '\'' +
+                ", reason='" + reason + '\'' +
+                ", errorCode=" + errorCode +
+                '}';
     }
 }

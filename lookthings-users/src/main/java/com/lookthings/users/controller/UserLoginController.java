@@ -2,6 +2,7 @@ package com.lookthings.users.controller;
 
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.core.service.impl.CommonConfig;
+import com.lookthings.core.service.impl.UserErrorCode;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -34,6 +35,10 @@ public class UserLoginController {
     private CommonConfig commonConfig;
 
 
+    @Resource
+    private UserErrorCode userErrorCode;
+
+
     @ResponseBody
     @RequestMapping(value = "/userSignUp")
     public JsonResult<String> userSignUp(@RequestBody UserDO userDO) {
@@ -47,6 +52,7 @@ public class UserLoginController {
                 ByteSource salt = ByteSource.Util.bytes(commonConfig.getIsaKey());
                 SimpleHash simpleHashPassword = new SimpleHash("md5", userDO.getUserPassword(), salt, 2);
                 userDO.setUserPassword(simpleHashPassword.toString());
+                userDO.setMailValid(0);
                 userDOList.add(userDO);
                 isInsertStatus = userService.insertUserByUserInfo(userDOList);
                 return new JsonResult(isInsertStatus, isInsertStatus ? "用户添加成功" : "用户添加失败");
@@ -76,6 +82,14 @@ public class UserLoginController {
         } catch (AuthenticationException e) {
             return new JsonResult(false, "其他错误");
         }
+        List<UserDO> userBeans = userService.getUsersByPageIndex(userDO);
+        if (0 != userBeans.size()) {
+            UserDO userBean = userBeans.get(0);
+            if (0 == userBean.getMailValid()) {
+                return new JsonResult(false, "用户邮箱没有验证", userErrorCode.getMailValidError());
+            }
+        }
+
         return new JsonResult(true, "用户登录成功");
     }
 

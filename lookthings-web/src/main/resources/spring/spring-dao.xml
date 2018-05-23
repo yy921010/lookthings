@@ -21,6 +21,8 @@
                 <value>classpath:config/jdbc.properties</value>
                 <!-- 通用配置 -->
                 <value>classpath:config/appConfig.properties</value>
+                <!-- 拥有过户 -->
+                <value>classpath:config/userErrorCode.properties</value>
             </list>
         </property>
     </bean>

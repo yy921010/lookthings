@@ -5,10 +5,7 @@ import com.lookthings.users.service.AssociatedRolePermsService;
 import com.lookthings.users.service.UserService;
 import com.lookthings.core.service.impl.CommonConfig;
 import org.apache.log4j.Logger;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -65,13 +62,13 @@ public class MyRealm extends AuthorizingRealm {
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws UnknownAccountException {
         String userName = (String) authenticationToken.getPrincipal();
         UserDO userDO = new UserDO();
         userDO.setUserName(userName);
         List<UserDO> userModels = userService.getUsersByPageIndex(userDO);
         UserDO userModel = userModels.get(0);
-        if (null != userModels) {
+        if (0 != userModels.size()) {
             ByteSource salt = ByteSource.Util.bytes(commonConfig.getIsaKey());
             AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userModel.getUserName(), userModel.getUserPassword(), salt, this.getName());
             log.debug("[doGetAuthenticationInfo] [authenticationInfo] " + authenticationInfo.toString());

@@ -13,6 +13,8 @@
           <element id="archive" name="lookthings.users-1.0-SNAPSHOT.jar">
             <element id="module-output" name="lookthings-users" />
           </element>
+          <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.0.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.0.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.0.6.RELEASE" />

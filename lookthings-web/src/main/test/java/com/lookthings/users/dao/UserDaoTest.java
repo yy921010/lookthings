@@ -1,13 +1,20 @@
 package com.lookthings.users.dao;
 
+import com.lookthings.core.utils.EmailUtils;
 import com.lookthings.users.BaseTest;
 import com.lookthings.users.model.UserDO;
+import com.sun.mail.util.MailSSLSocketFactory;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -64,5 +71,14 @@ public class UserDaoTest extends BaseTest {
     @Test
     public void TestDeleteUser() {
         //System.out.println(userDao.delete(userids));
+    }
+
+
+    @Test
+    public void TestEmail() throws GeneralSecurityException {
+        EmailUtils.emailUrl = "charlesmaxwellyoung@gmail.com";
+        EmailUtils.subjectTitle = "这是一个测试";
+        EmailUtils.subjectContent = "测试内容";
+        EmailUtils.sendEmail();
     }
 }

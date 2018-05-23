@@ -3,9 +3,12 @@ package com.lookthings.users.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.lookthings.core.json.JsonResult;
+import com.lookthings.core.service.impl.CommonConfig;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
 import org.apache.log4j.Logger;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +28,9 @@ public class UserController {
     private static Logger log = Logger.getLogger(UserController.class);
     @Resource
     private UserService userService;
+
+    @Resource
+    private CommonConfig commonConfig;
 
     /**
      * 根据用户参数进行用户的查询
@@ -66,6 +72,12 @@ public class UserController {
             return jsonResult;
         }
         List<UserDO> userList = JSONArray.parseArray(userDOS, UserDO.class);
+        userList.forEach(userItem -> {
+            ByteSource salt = ByteSource.Util.bytes(commonConfig.getIsaKey());
+            SimpleHash simpleHashPassword = new SimpleHash("md5", userItem.getUserPassword(), salt, 2);
+            userItem.setUserPassword(simpleHashPassword.toString());
+        });
+
         Boolean isSuccess = userService.insertUserByUserInfo(userList);
         jsonResult.setSuccess(isSuccess);
         jsonResult.setResult(isSuccess);
