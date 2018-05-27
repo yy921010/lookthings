@@ -36,4 +36,9 @@ public final class SystemUtils {
         }
         return ip;
     }
+
+    public static int getRandomNumber(int min, int max) {
+        int randNumber = min + (int) (Math.random() * ((max - min) + 1));
+        return randNumber;
+    }
 }

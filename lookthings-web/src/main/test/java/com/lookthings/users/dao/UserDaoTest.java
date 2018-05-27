@@ -1,6 +1,7 @@
 package com.lookthings.users.dao;
 
 import com.lookthings.core.utils.EmailUtils;
+import com.lookthings.core.utils.SystemUtils;
 import com.lookthings.users.BaseTest;
 import com.lookthings.users.model.UserDO;
 import com.sun.mail.util.MailSSLSocketFactory;
@@ -80,5 +81,10 @@ public class UserDaoTest extends BaseTest {
         EmailUtils.subjectTitle = "这是一个测试";
         EmailUtils.subjectContent = "测试内容";
         EmailUtils.sendEmail();
+    }
+
+    @Test
+    public void TestRandomNumber() {
+        System.out.println(SystemUtils.getRandomNumber(1, 999999));
     }
 }

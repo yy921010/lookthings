@@ -18,6 +18,16 @@ public class UserDO {
     private Date gmtCreate;
     private Date gmtModified;
 
+    public Integer getEmailCode() {
+        return emailCode;
+    }
+
+    public void setEmailCode(Integer emailCode) {
+        this.emailCode = emailCode;
+    }
+
+    private Integer emailCode;
+
     public Integer getId() {
         return id;
     }
@@ -102,6 +112,7 @@ public class UserDO {
                 ", roleId=" + roleId +
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
+                ", emailCode=" + emailCode +
                 '}';
     }
 }

@@ -3,6 +3,8 @@ package com.lookthings.users.controller;
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.core.service.impl.CommonConfig;
 import com.lookthings.core.service.impl.UserErrorCode;
+import com.lookthings.core.utils.EmailUtils;
+import com.lookthings.core.utils.SystemUtils;
 import com.lookthings.users.model.UserDO;
 import com.lookthings.users.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -40,9 +42,9 @@ public class UserLoginController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/userSignUp")
+    @RequestMapping(value = "userSign")
     public JsonResult<String> userSignUp(@RequestBody UserDO userDO) {
-        Boolean isInsertStatus;
+        boolean isInsertStatus = false;
         if (null != userDO.getUserName()) {
             List<UserDO> userBeans = userService.getUsersByPageIndex(userDO);
             List<UserDO> userDOList = new ArrayList<>();
@@ -63,7 +65,7 @@ public class UserLoginController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/userLogin")
+    @RequestMapping(value = "userLogin")
     public JsonResult<String> userSignInByNameAndPassword(@RequestBody UserDO userDO) {
         if (userDO.getUserName() == null || userDO.getUserPassword() == null) {
             return new JsonResult(false, "用户名或者密码为空");
@@ -94,7 +96,23 @@ public class UserLoginController {
     }
 
     @ResponseBody
-    @RequestMapping("/userLoginOut")
+    @RequestMapping(value = "sendEmailCode")
+    public JsonResult<Boolean> sendEmailValidCode(UserDO userDO) {
+        int emailCode = SystemUtils.getRandomNumber(1, 999999);
+        userDO.setEmailCode(emailCode);
+        List<UserDO> userDOS = new ArrayList<>();
+        userDOS.add(userDO);
+        Boolean isStatus = userService.updateUserByUserInfo(userDOS);
+        EmailUtils.emailUrl = userDO.getUserMail();
+        EmailUtils.subjectTitle = "验证";
+        EmailUtils.subjectContent = "" + emailCode;
+        EmailUtils.sendEmail();
+        return new JsonResult<>(isStatus, "发送成功", "0");
+    }
+
+
+    @ResponseBody
+    @RequestMapping("userLoginOut")
     public JsonResult userSignOut() {
         JsonResult<String> jsonResult = new JsonResult();
         Subject currentUser = SecurityUtils.getSubject();
