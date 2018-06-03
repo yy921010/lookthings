@@ -2,6 +2,7 @@ package com.lookthings.users.controller;
 
 import com.lookthings.core.json.JsonResult;
 import com.lookthings.core.service.impl.CommonConfig;
+import com.lookthings.core.service.impl.LoginError;
 import com.lookthings.core.service.impl.UserErrorCode;
 import com.lookthings.core.utils.EmailUtils;
 import com.lookthings.core.utils.SystemUtils;
@@ -38,18 +39,26 @@ public class UserLoginController {
 
 
     @Resource
+    private LoginError loginError;
+
+    @Resource
     private UserErrorCode userErrorCode;
 
-
+    /**
+     * 用来进行用户注册
+     *
+     * @param userDO
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "userSign")
     public JsonResult<String> userSignUp(@RequestBody UserDO userDO) {
-        boolean isInsertStatus = false;
+        boolean isInsertStatus;
         if (null != userDO.getUserName()) {
             List<UserDO> userBeans = userService.getUsersByPageIndex(userDO);
             List<UserDO> userDOList = new ArrayList<>();
             if (0 != userBeans.size()) {
-                return new JsonResult(false, "用户已经存在");
+                return new JsonResult(false, "用户已经存在", loginError.getAccount());
             } else {
                 ByteSource salt = ByteSource.Util.bytes(commonConfig.getIsaKey());
                 SimpleHash simpleHashPassword = new SimpleHash("md5", userDO.getUserPassword(), salt, 2);
@@ -57,7 +66,12 @@ public class UserLoginController {
                 userDO.setMailValid(0);
                 userDOList.add(userDO);
                 isInsertStatus = userService.insertUserByUserInfo(userDOList);
-                return new JsonResult(isInsertStatus, isInsertStatus ? "用户添加成功" : "用户添加失败");
+                String msg;
+                if (isInsertStatus) {
+                    msg = "用户注册成功";
+                    new JsonResult(isInsertStatus, msg);
+                }
+                return new JsonResult(isInsertStatus, "用户注册失败", loginError.getOther());
             }
         }
         return new JsonResult(false, "用户添加失败");
@@ -97,9 +111,15 @@ public class UserLoginController {
 
     @ResponseBody
     @RequestMapping(value = "sendEmailCode")
-    public JsonResult<Boolean> sendEmailValidCode(UserDO userDO) {
+    public JsonResult<Boolean> sendEmailValidCode(@RequestBody UserDO userDO) {
+        List<UserDO> userDOList = userService.getUsersByPageIndex(userDO);
+        if (userDOList.size() > 1) {
+            return new JsonResult(false, "用户已经存在", loginError.getAccount());
+        }
+        UserDO userDO1 = userDOList.get(0);
         int emailCode = SystemUtils.getRandomNumber(1, 999999);
         userDO.setEmailCode(emailCode);
+        userDO.setId(userDO1.getId());
         List<UserDO> userDOS = new ArrayList<>();
         userDOS.add(userDO);
         Boolean isStatus = userService.updateUserByUserInfo(userDOS);
@@ -107,7 +127,7 @@ public class UserLoginController {
         EmailUtils.subjectTitle = "验证";
         EmailUtils.subjectContent = "" + emailCode;
         EmailUtils.sendEmail();
-        return new JsonResult<>(isStatus, "发送成功", "0");
+        return new JsonResult(isStatus, "发送成功", "0");
     }
 
 
@@ -120,5 +140,24 @@ public class UserLoginController {
         jsonResult.setSuccess(true);
         jsonResult.setResult("注销成功");
         return jsonResult;
+    }
+
+    @ResponseBody
+    @RequestMapping("validCode")
+    public JsonResult validCode(@RequestBody UserDO userDO) {
+        List<UserDO> userDOList = userService.getUsersByPageIndex(userDO);
+        if (0 != userDOList.size()) {
+            UserDO userData = userDOList.get(0);
+            if (userData.getEmailCode().equals(userDO.getEmailCode())) {
+                userData.setMailValid(1);
+                List<UserDO> userDOS = new ArrayList<>();
+                userDOS.add(userData);
+                userService.updateUserByUserInfo(userDOS);
+                return new JsonResult(true, "验证通过");
+            } else {
+                new JsonResult(false, "验证失败", loginError.getEmailValid());
+            }
+        }
+        return new JsonResult(false, "验证失败", loginError.getEmailValid());
     }
 }

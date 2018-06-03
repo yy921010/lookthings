@@ -24,6 +24,11 @@
             <artifactId>lookthings.core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.lookthings</groupId>
+            <artifactId>lookthings.common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <!-- 添加start-->
 </project>

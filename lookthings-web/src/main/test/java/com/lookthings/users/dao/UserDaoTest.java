@@ -4,13 +4,11 @@ import com.lookthings.core.utils.EmailUtils;
 import com.lookthings.core.utils.SystemUtils;
 import com.lookthings.users.BaseTest;
 import com.lookthings.users.model.UserDO;
-import com.sun.mail.util.MailSSLSocketFactory;
+
 import org.junit.Test;
 
 import javax.annotation.Resource;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
 
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static junit.framework.TestCase.assertEquals;
+
 
 /**
  * Created by Fantasy on 2018/4/19.
@@ -87,4 +86,7 @@ public class UserDaoTest extends BaseTest {
     public void TestRandomNumber() {
         System.out.println(SystemUtils.getRandomNumber(1, 999999));
     }
+
+
+
 }

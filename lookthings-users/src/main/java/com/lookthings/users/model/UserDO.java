@@ -17,6 +17,7 @@ public class UserDO {
     private Integer roleId;
     private Date gmtCreate;
     private Date gmtModified;
+    private Integer emailCode;
 
     public Integer getEmailCode() {
         return emailCode;
@@ -25,8 +26,6 @@ public class UserDO {
     public void setEmailCode(Integer emailCode) {
         this.emailCode = emailCode;
     }
-
-    private Integer emailCode;
 
     public Integer getId() {
         return id;
