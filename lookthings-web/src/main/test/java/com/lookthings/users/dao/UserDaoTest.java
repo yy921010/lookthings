@@ -84,8 +84,13 @@ public class UserDaoTest extends BaseTest {
 
     @Test
     public void TestRandomNumber() {
+        EmailUtils.emailUrl = "charlesmaxwellyoung@gmail.com";
+        EmailUtils.subjectTitle = "TEST";
+        EmailUtils.subjectContent = "123456";
+        EmailUtils.sendEmail();
         System.out.println(SystemUtils.getRandomNumber(1, 999999));
     }
+
 
 
 

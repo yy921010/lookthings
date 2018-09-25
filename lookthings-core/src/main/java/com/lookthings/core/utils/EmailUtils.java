@@ -17,7 +17,7 @@ public final class EmailUtils {
 
     private final static String EMAIL_HOST = "smtp.qq.com";
     private final static String FROM_EMAIL = "805841483@qq.com";
-    private final static String EMAIL_PASSWORD = "dcrthodqoywsbbib";
+    private final static String EMAIL_PASSWORD = "";
 
     public static String emailUrl = "";
 
@@ -70,7 +70,9 @@ public final class EmailUtils {
             // Set Subject: 头部头字段
             message.setSubject(subjectTitle);
             // 设置消息体
-            message.setText(subjectContent);
+            //message.setText(subjectContent);
+            message.setContent("<h1>验证码</h1>" +
+                    "<p>您的验证码：<strong>" + subjectContent + "</strong></p>", "text/html;charset=utf8");
             // 发送消息
             Transport.send(message);
             isSendStatus = true;

@@ -23,7 +23,7 @@ import java.util.List;
  * @author Fantasy
  */
 @Controller
-@RequestMapping("userModule")
+@RequestMapping("user")
 public class UserController {
     private static Logger log = Logger.getLogger(UserController.class);
     @Resource
